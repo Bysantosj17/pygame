@@ -30,13 +30,22 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+        
+    # ---- LOGICA
+    if (cord_x > 720 or cord_x < 0):
+        speed_x *= -1
+    if (cord_y > 420 or cord_y < 0):
+        speed_y *= -1
     
     cord_x += speed_x
+    cord_y += speed_y
+    # ---- LOGICA
+    
     #Color de fondo
     screen.fill(WHITE)
     ### ----- ZONA DE DIBUJO
 
-    pygame.sprite.draw(screen, RED, (cord_x, cord_y, 80, 80))
+    pygame.draw.rect(screen, RED, (cord_x, cord_y, 80, 80))
     
     ### ----- ZONA DE DIBUJO
     #Actualizar pantalla
