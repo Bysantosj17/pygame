@@ -50,7 +50,6 @@ while not game_over:
                 player2_y_speed = 6
                 
                 
-                
         if event.type == pygame.KEYUP:
             #Player 1
             if event.key == pygame.K_w:
@@ -63,19 +62,42 @@ while not game_over:
             if event.key == pygame.K_DOWN:
                 player2_y_speed = 0
                 
-                
-                
+    if pelota_y > 690 or pelota_y < 10:
+        pelota_speed_y *= -1
+    
+    #Revisa si la pelota sale del lado derecho
+    if pelota_x > 1000:
+        pelota_x = 500
+        pelota_y = 350
+        #Si sale de la pantalla, invierte direccion
+        pelota_speed_x *= -1
+        pelota_speed_y *= -1
+        
+    if pelota_x < 0:
+        pelota_x = 500
+        pelota_y = 350
+        #Si sale de la pantalla, invierte direccion
+        pelota_speed_x *= -1
+        pelota_speed_y *= -1
+        #
                 
     #Modifica las cordenadas para darle movimiento a los jugadores:
     player1_y_coor += player1_y_speed
-    player2_y_coor += player2_y_speed           
-    
+    player2_y_coor += player2_y_speed
+    #Movimiento de la pelota
+    pelota_x += pelota_speed_x
+    pelota_y += pelota_speed_y
+            
     screen.fill(black)
     #Zona de dibujo
     player_1 = pygame.draw.rect(screen, white, (player1_x_coor, player1_y_coor, player_width, player_height))
     player_2 = pygame.draw.rect(screen, white, (player2_x_coor, player2_y_coor, player_width, player_height))
 
     pelota_1 = pygame.draw.circle(screen, white, (pelota_x, pelota_y), 10)
+    
+    #Colisiones
+    if pelota_1.colliderect(player_1) or pelota_1.colliderect(player_2):
+        pelota_speed_x *= -1
     
     pygame.display.flip()
     Clock.tick(60)
