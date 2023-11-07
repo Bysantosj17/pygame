@@ -8,7 +8,7 @@ done = False
 
 background = pygame.image.load("./Fondo/fondo_img.jpg").convert()
 
-player = pygame.image.load("./Jugador/jugador_img.png").convert()
+player = pygame.image.load("./Jugador/.png").convert()
 player.set_colorkey([0, 0 ,0])
 
 pygame.mouse.set_visible(0)
