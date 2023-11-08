@@ -12,9 +12,8 @@ class Covenat(pygame.sprite.Sprite):
         
     def update(self):
         self.rect.y += 1
-        
         if self.rect.y > 600:
-            self.rect.y = -10
+            self.rect.y = -100
             self.rect.x = random.randrange(900)
         
 class MaterChef(pygame.sprite.Sprite):
@@ -24,16 +23,10 @@ class MaterChef(pygame.sprite.Sprite):
         self.image.set_colorkey(black)
         self.rect = self.image.get_rect()
         
-    def update(self):
-        mouse_pos = pygame.mouse.get_pos()
-        player.rect.x = mouse_pos[0]
-        player.rect.y = mouse_pos[1]
-        
-        
 pygame.init()
 
 pygame.mouse.set_visible(0)
-screen = pygame.display.set_mode((900,600))
+screen = pygame.display.set_mode([900,600])
 clock = pygame.time.Clock()
 score = 0
 
@@ -61,9 +54,13 @@ while not done:
     
     all_sprite_list.update()
     
-    Covena_hit_list = pygame.sprite.spritecollide(player, Covenat_list, True)
+    mouse_pos = pygame.mouse.get_pos()
+    player.rect.y = mouse_pos[1]
+    player.rect.x = mouse_pos[0]
     
-    for Covenat in Covena_hit_list:
+    Covenant_hit_list = pygame.sprite.spritecollide(player, Covenat_list, True)
+    
+    for Covenat1 in Covenant_hit_list:
         score += 1
         print(score)
     
