@@ -14,11 +14,20 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load('./Disparar_mouse/img/jugador_img.png').convert()
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
+        self.speed_x = 0
+        self.speed_y = 0
+        
+    def changespeed(self, x):
+        self.speed_x += x
         
     def update(self):
-        mouse_pos = pygame.mouse.get_pos()
-        player.rect.x = mouse_pos[0]
+        self.rect.x += self.speed_x
         player.rect.y = 510
+        
+    ##def update(self):
+    #   mouse_pos = pygame.mouse.get_pos()
+    #  player.rect.x = mouse_pos[0]
+    #   player.rect.y = 510
         
 class Bala(pygame.sprite.Sprite):
     def __init__(self):
@@ -57,14 +66,27 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-            
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            bala = Bala()
-            bala.rect.x = player.rect.x + 45
-            bala.rect.y = player.rect.y - 20
-            
-            all_sprite_list.add(bala)
-            bala_list.add(bala)
+        
+        ##-----Teclado#-----#
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                player.changespeed(-5)
+            if event.key == pygame.K_RIGHT:
+                player.changespeed(5)
+            if event.key == pygame.K_SPACE:
+                bala = Bala()
+                bala.rect.x = player.rect.x + 45
+                bala.rect.y = player.rect.y - 20
+                
+                all_sprite_list.add(bala)
+                bala_list.add(bala)
+                
+                
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT:
+                player.changespeed(5)
+            if event.key == pygame.K_RIGHT:
+                player.changespeed(-5)
             
     all_sprite_list.update()
     
