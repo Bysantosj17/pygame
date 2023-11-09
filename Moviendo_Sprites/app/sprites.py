@@ -23,6 +23,12 @@ class MaterChef(pygame.sprite.Sprite):
         self.image.set_colorkey(black)
         self.rect = self.image.get_rect()
         
+    def update(self):
+        mouse_pos = pygame.mouse.get_pos()
+        player.rect.y = mouse_pos[1]
+        player.rect.x = mouse_pos[0]
+        
+        
 pygame.init()
 
 pygame.mouse.set_visible(0)
@@ -35,9 +41,6 @@ done = False
 Covenat_list = pygame.sprite.Group()
 all_sprite_list = pygame.sprite.Group()
 
-player = MaterChef()
-all_sprite_list.add(player)
-
 for i in range(50):
     Covenat1 = Covenat()
     Covenat1.rect.x = random.randrange(900)
@@ -46,6 +49,9 @@ for i in range(50):
     Covenat_list.add(Covenat1)
     all_sprite_list.add(Covenat1)
     
+player = MaterChef()
+all_sprite_list.add(player)    
+    
 
 while not done:
     for event in pygame.event.get():
@@ -53,11 +59,7 @@ while not done:
             done = True
     
     all_sprite_list.update()
-    
-    mouse_pos = pygame.mouse.get_pos()
-    player.rect.y = mouse_pos[1]
-    player.rect.x = mouse_pos[0]
-    
+        
     Covenant_hit_list = pygame.sprite.spritecollide(player, Covenat_list, True)
     
     for Covenat1 in Covenant_hit_list:
