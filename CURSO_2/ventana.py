@@ -2,7 +2,7 @@ import pygame,sys
 
 pygame.init()
 
-PANTALLA =  pygame.display.set_mode((1000,800))
+PANTALLA =  pygame.display.set_mode((500,600))
 Titulo = pygame.display.set_caption('Mi primer juego')
 
 blanco = (255,255,255)

@@ -1,0 +1,26 @@
+import pygame
+from pygame.locals import *
+import sys
+
+#Iniciacion de pygame
+pygame.init()
+
+#Pantalla -ventana
+PANTALLA = pygame.display.set_mode((800,475))
+
+#Fondo del juegp
+fondo = pygame.image.load('./cambiar_img_icono_fondo/img/fondo.jpg')
+PANTALLA.blit(fondo,(0,0))
+
+#Icono y titulo
+pygame.display.set_caption("santos")
+icono = pygame.image.load('./cambiar_img_icono_fondo/iconos/jugador_img.png')
+pygame.display.set_icon(icono)
+
+#Bucle del juego
+while True:
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
+    pygame.display.update()
