@@ -15,6 +15,11 @@ pygame.display.set_icon(icono)
 #Fondo del juego
 fondo = pygame.image.load('./personaje_animacion_controles/img/fondo.jpg')
 
+#Musica de Fondo
+pygame.mixer.music.load('./personaje_animacion_controles/sonido/musica_1.ogg')
+pygame.mixer.music.play(-1)
+
+
 #personajes
 quieto = pygame.image.load('./personaje_animacion_controles/img/idle1.png')
 
@@ -35,6 +40,12 @@ caminaIzquierda = [pygame.image.load('./personaje_animacion_controles/img/run1-i
 salta =  [pygame.image.load('./personaje_animacion_controles/img/jump1.png'),
             pygame.image.load('./personaje_animacion_controles/img/jump2.png'),
             pygame.image.load('./personaje_animacion_controles/img/jump3.png')]
+
+#Sonido
+sonido_arriba = pygame.image.load('./personaje_animacion_controles/sonido/volume_up.png')
+sonido_abajo = pygame.image.load('./personaje_animacion_controles/sonido/volume_down.png')
+sonido_mute = pygame.image.load('./personaje_animacion_controles/sonido/volume_muted.png')
+sonido_max = pygame.image.load('./personaje_animacion_controles/sonido/volume_max.png')
 
 x = 0
 px = 50
@@ -153,6 +164,30 @@ while ejecuta:
         else:
             cuentaSalto = 10
             salto = False
+    
+    #BAja volumen
+    if keys[pygame.K_9] and pygame.mixer.music.get_volume() > 0.0:
+        pygame.mixer.music.set_volumen(pygame.mixer.music.get_volume() - 0.01)
+        PANTALLA.blit(sonido_abajo, (650, 25))
+    elif keys[pygame.K_9] and pygame.mixer.music.get_volume() == 0.0:
+        PANTALLA.blit(sonido_mute, (650, 25))
+        
+    #Sube Volumen
+    if keys[pygame.K_0] and pygame.mixer.music.get_volume() < 1.0:
+        pygame.mixer.music.set_volume(pygame.mixer.music.get_volume() + 0.01)
+        PANTALLA.blit(sonido_arriba, (650, 25))
+    elif keys[pygame.K_0] and pygame.mixer.music.get_volume() == 1.0:
+        PANTALLA.blit(sonido_max, (650, 25))
+        
+    #Desactivar sonido
+    elif keys[pygame.K_m]:
+        pygame.mixer.music.set_volume(0.0)
+        PANTALLA.blit(sonido_mute, (850, 25))
+        
+    #Reactivar Sonido
+    elif keys[pygame.K_COMMA]:
+        pygame.mixer.music.set_volume(1.0)
+        PANTALLA.blit(sonido_max, (650, 25))
             
     #Llamada a la funcion de actualizacion de la ventana
     recargarPantalla()
