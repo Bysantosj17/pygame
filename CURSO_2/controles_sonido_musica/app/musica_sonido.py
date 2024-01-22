@@ -167,7 +167,7 @@ while ejecuta:
     
     #BAja volumen
     if keys[pygame.K_9] and pygame.mixer.music.get_volume() > 0.0:
-        pygame.mixer.music.set_volumen(pygame.mixer.music.get_volume() - 0.01)
+        pygame.mixer.music.set_volume(pygame.mixer.music.get_volume() - 0.01)
         PANTALLA.blit(sonido_abajo, (650, 25))
     elif keys[pygame.K_9] and pygame.mixer.music.get_volume() == 0.0:
         PANTALLA.blit(sonido_mute, (650, 25))

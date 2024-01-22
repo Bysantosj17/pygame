@@ -78,6 +78,7 @@ while run:
     for box in boxes:
         pygame.draw.rect(screen, "blue", box)
         
+        
     salir = pygame.draw.rect(screen, "red", (100, 100, 50, 50))  
 
     for event in pygame.event.get():                                
