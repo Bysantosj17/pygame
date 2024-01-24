@@ -21,9 +21,11 @@ class Jugador(pygame.sprite.Sprite):
         super().__init__()
         #Rectangulo (jugador)
         self.image = pygame.image.load("./coliciones_sprites/img/img.png").convert()
-        self.image.set_colorkey(BLACK)
         #Obtiene el rectangulo (sprite)
         self.rect = self.image.get_rect()
+        self.image.set_colorkey(BLACK)
+        self.radius = 45
+        #pygame.draw.circle(self.image, GREEN, self.rect.center, self.radius)
         #Centra el rectangulo (sprite)
         self.rect.center = (ANCHO // 2, 500)
         #Velocidad del personaje (Inicial)
@@ -102,6 +104,8 @@ class Enemigos(pygame.sprite.Sprite):
         self.image.set_colorkey(BLACK)
         #Obtiene el rectangulo (sprite)
         self.rect = self.image.get_rect()
+        self.radius = 48
+        #pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
         self.rect.x = random.randrange(ANCHO - self.rect.width)
         self.rect.y = random.randrange(300 - self.rect.height)
         #Velocidad predeterminada cada vuelta del bucle si no pulsas nada
@@ -183,11 +187,21 @@ while ejecutando:
     sprites.update()
     
     #Colision de los enemigos a jugador
-    colision = pygame.sprite.spritecollide(Jugador, Enemigos_list, False)
+    colision = pygame.sprite.spritecollide(Jugador, Enemigos_list, False, pygame.sprite.collide_circle)
+    
+    colision_balas = pygame.sprite.groupcollide(Enemigos_list, balas, True, True)
+    
+    if colision_balas:
+        Enemigo.image = pygame.image.load("./coliciones_sprites/img/explo.png").convert()
+        Enemigo.image.set_colorkey(BLACK)
+        Enemigo.velocidad_y += 1  
+    elif Enemigo.rect.top > ALTO:
+        Enemigo.kill()
+        
     if colision:
         Enemigo.image = pygame.image.load("./coliciones_sprites/img/explo.png").convert()
         Enemigo.image.set_colorkey(BLACK)
-        Enemigo.velocidad_y += 1
+        Enemigo.velocidad_y += 1  
     elif Enemigo.rect.top > ALTO:
         Enemigo.kill()
     
