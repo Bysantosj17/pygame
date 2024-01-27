@@ -166,7 +166,7 @@ Jugador = Jugador()
 sprites.add(Jugador)
 
 #Instanciaciones de los enemigos
-for x in range(random.randrange(20) + 5):
+for x in range(random.randrange(2000) + 1000):
     Enemigo = Enemigos()
     Enemigos_list.add(Enemigo)
     

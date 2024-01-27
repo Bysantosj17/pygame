@@ -25,7 +25,7 @@ class Jugador(pygame.sprite.Sprite):
         #Obtiene el rectangulo (sprite)
         self.rect = self.image.get_rect()
         #Centra el rectangulo (sprite)
-        self.rect.center = (ANCHO // 2, ALTO // 2)
+        self.rect.center = (ANCHO // 4, ALTO // 3)
         #Velocidad del personaje (Inicial)
         self.velocidad_x =  0
         

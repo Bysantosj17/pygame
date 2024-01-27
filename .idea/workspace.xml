@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f56d84d7-f1ff-40bb-88c3-edbd423c98fd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/CURSO_2/Añadiendo_meteoritos_RANDOM_generación_INFINITA/metioritos_random_infinito.py" beforeDir="false" afterPath="$PROJECT_DIR$/CURSO_2/Añadiendo_meteoritos_RANDOM_generación_INFINITA/metioritos_random_infinito.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CURSO_2/colisiones_disparos/colisiones_disparos.py" beforeDir="false" afterPath="$PROJECT_DIR$/CURSO_2/colisiones_disparos/colisiones_disparos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CURSO_2/creando_disparos/disparos.py" beforeDir="false" afterPath="$PROJECT_DIR$/CURSO_2/creando_disparos/disparos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CURSO_2/fondo_movimiento_bucle/app/fondo_blucle.py" beforeDir="false" afterPath="$PROJECT_DIR$/CURSO_2/fondo_movimiento_bucle/app/fondo_blucle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CURSO_2/movimiento_sprites_teclado_conLimites/moviendo_sprites_teclado.py" beforeDir="false" afterPath="$PROJECT_DIR$/CURSO_2/movimiento_sprites_teclado_conLimites/moviendo_sprites_teclado.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 1
+}]]></component>
+  <component name="ProjectId" id="2bYcvYu9ejQV34Ze1eOULwEimLY" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "E:/Todo/ESCRITORIO/CURSOS/pygame",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-67fca87a943a-c986f194a52a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.11799.259" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f56d84d7-f1ff-40bb-88c3-edbd423c98fd" name="Changes" comment="" />
+      <created>1706395683893</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1706395683893</updated>
+      <workItem from="1706395685142" duration="9000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

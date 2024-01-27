@@ -8,7 +8,7 @@ pygame.init()
 #Pantalla -ventana
 W,H = 800, 475
 PANTALLA = pygame.display.set_mode((W,H))
-FPS = 200
+FPS = 2000
 RELOJ = pygame.time.Clock()
 
 #Fondo del juegp

@@ -1,8 +1,8 @@
 import pygame, random
 
 #Tamaño de la pantalla
-ANCHO = 800
-ALTO = 600
+ANCHO = 1000
+ALTO = 800
 
 #FPS
 FPS = 30
@@ -18,6 +18,13 @@ BLUE  = (  0,  0,255)
 Consolas = pygame.font.match_font('consolas')
 arial = pygame.font.match_font('arial')
 times = pygame.font.match_font('times')
+
+def muestra_texto(pantalla, fuente, texto, color, dimesiones, posx, posy):
+    tipo_letra = pygame.font.Font(fuente, dimesiones)
+    superficie = tipo_letra.render(texto, True, color)
+    rectangulo = superficie.get_rect()
+    rectangulo.center = (posx,posy)
+    pantalla.blit(superficie, rectangulo)
 
 class Jugador(pygame.sprite.Sprite):
     #Sprite del jugador 
@@ -109,13 +116,12 @@ class Enemigos1(pygame.sprite.Sprite):
         self.image.set_colorkey(BLACK)
         #Obtiene el rectangulo (sprite)
         self.rect = self.image.get_rect()
-        self.radius = 48
-        #pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
-        self.rect.x = random.randrange(ANCHO - self.rect.width)
-        self.rect.y = random.randrange(300 - self.rect.height)
+        self.radius = 48        #pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
         #Velocidad predeterminada cada vuelta del bucle si no pulsas nada
         self.velocidad_x =  random.randrange(2,10)
         self.velocidad_y =  random.randrange(2,10)
+        self.rect.x = random.randrange(ANCHO - self.rect.width)
+        self.rect.y = random.randrange(300 - self.rect.height)
         
         
     def update(self):
@@ -144,17 +150,16 @@ class Enemigos2(pygame.sprite.Sprite):
         #Heredamos el init de la clase Sprite de Pygame
         super().__init__()
         #Rectangulo (jugador)
-        self.image = pygame.image.load("./Añadiendo_meteoritos_RANDOM_generación_INFINITA/img/enemigo_2.png").convert()
-        self.image.set_colorkey(BLACK)
+        self.image = pygame.transform.scale(pygame.image.load("./Añadiendo_meteoritos_RANDOM_generación_INFINITA/img/enemigo_2.png"),(95,100))
         #Obtiene el rectangulo (sprite)
         self.rect = self.image.get_rect()
-        self.radius = 48
-        #pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
         self.rect.x = random.randrange(ANCHO - self.rect.width)
         self.rect.y = random.randrange(300 - self.rect.height)
+        self.radius = 48
+        #pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
         #Velocidad predeterminada cada vuelta del bucle si no pulsas nada
-        self.velocidad_x =  random.randrange(2,10)
-        self.velocidad_y =  random.randrange(2,10)
+        self.velocidad_x =  random.randrange(2,8)
+        self.velocidad_y =  random.randrange(2,8)
         
         
     def update(self):
@@ -183,17 +188,14 @@ class Enemigos3(pygame.sprite.Sprite):
         #Heredamos el init de la clase Sprite de Pygame
         super().__init__()
         #Rectangulo (jugador)
-        self.image = pygame.image.load("./Añadiendo_meteoritos_RANDOM_generación_INFINITA/img/enemigo_3.png").convert()
-        self.image.set_colorkey(BLACK)
-        #Obtiene el rectangulo (sprite)
+        self.image = pygame.transform.scale(pygame.image.load("./Añadiendo_meteoritos_RANDOM_generación_INFINITA/img/enemigo_3.png"),(95,100))
         self.rect = self.image.get_rect()
+        self.image.set_colorkey(BLACK)
         self.radius = 48
-        #pygame.draw.circle(self.image, RED, self.rect.center, self.radius)
         self.rect.x = random.randrange(ANCHO - self.rect.width)
         self.rect.y = random.randrange(300 - self.rect.height)
-        #Velocidad predeterminada cada vuelta del bucle si no pulsas nada
-        self.velocidad_x =  random.randrange(2,10)
-        self.velocidad_y =  random.randrange(2,10)
+        self.velocidad_x = random.randrange(1,7)
+        self.velocidad_y = random.randrange(1,7)
         
         
     def update(self):
@@ -257,29 +259,19 @@ class Disparos(pygame.sprite.Sprite):
             #Ancho
             self.velocidad_y = random.randrange(1, 10)
 '''
-
-
+#Inicializacion de Pygame, creacion de la ventana, tituloy control de reloj
+pygame.init()
+pantalla = pygame.display.set_mode((ANCHO, ALTO))
 
 #Fondo del juegp
-fondo = pygame.image.load('./creando_disparos/img/fondo.jpg')
-x = 0
+fondo = pygame.transform.scale(pygame.image.load('./Añadiendo_meteoritos_RANDOM_generación_INFINITA/img/fondo.jpg').convert(),(1000,800))
+pygame.display.set_caption("Trabajando con esprites")
+clock = pygame.time.Clock()
 
 #Sistema de puntacion
 puntacion = 0
 
-def muestra_texto(pantalla, fuente, texto, color, dimesiones, x, y):
-    tipo_letra = pygame.font.Font(fuente, dimesiones)
-    superficie = tipo_letra.render(texto, True, color)
-    rectangulo = superficie.get_rect()
-    
-    pantalla.blit(superficie, rectangulo)
 
-
-#Inicializacion de Pygame, creacion de la ventana, tituloy control de reloj
-pygame.init()
-pantalla = pygame.display.set_mode((ANCHO, ALTO))
-pygame.display.set_caption("Trabajando con esprites")
-clock = pygame.time.Clock()
 
 #Grupo de sprites, instancias del objeto jugador
 Enemigos_list = pygame.sprite.Group()
@@ -314,11 +306,14 @@ Enemigos_1.add(Enemigos3)'''
     Enemigo = Enemigos()
     Enemigos_list.add(Enemigo)'''
     
+
+    
 #Bucle de juego
 ejecutando =  True
 while ejecutando:
     #Es lo que especifica  la velocidad del bucle de juego
     clock.tick(FPS)
+    pantalla.blit(fondo, (0, 0))
     #Eventos
     for event in pygame.event.get():
         #Se cierra y termina el bucle
@@ -348,14 +343,17 @@ while ejecutando:
         puntacion += 20
         
     if not Enemigos_1 and not Enemigos_2 and not Enemigos_3:
-        enemigos1 = Enemigos1()
-        Enemigos_1.add(enemigos1)
-
-        enemigos2 = Enemigos2()
-        Enemigos_1.add(enemigos2)
-
-        enemigos3 = Enemigos3()
-        Enemigos_1.add(enemigos3)
+        for x in range(random.randrange(5) + 2):
+            enemigos1 = Enemigos1()
+            Enemigos_1.add(enemigos1)
+        
+        for x in range(random.randrange(10) + 5):
+            enemigos2 = Enemigos2()
+            Enemigos_2.add(enemigos2)
+            
+        for x in range(random.randrange(4) + 2):
+            enemigos3 = Enemigos3()
+            Enemigos_3.add(enemigos3)
     
     #Colision de los enemigos a jugador
     #colision = pygame.sprite.spritecollide(Jugador, Enemigos_list, False, pygame.sprite.collide_circle)
@@ -369,8 +367,6 @@ while ejecutando:
     if colision_balas:
         print("Colision por disparo")'''
     
-    #Fondo de pantalla. dibujo y formas geometricas
-    pantalla.blit(fondo, [ 0, 0])
     #asEnemigos.draw(pantalla)
     Enemigos_list.draw(pantalla)
     balas.draw(pantalla)
@@ -379,12 +375,12 @@ while ejecutando:
     Enemigos_2.draw(pantalla)
     Enemigos_3.draw(pantalla)
     
-    pygame.draw.line(pantalla, RED, (400,0), (400, 800), 2 )
-    pygame.draw.line(pantalla, WHITE, (0, 360), (800, 360), 2)
+    muestra_texto(pantalla, Consolas, str(puntacion), RED, 40, 850, 30)
+    '''    pygame.draw.line(pantalla, RED, (400,0), (400, 800), 2 )
+        pygame.draw.line(pantalla, WHITE, (0, 360), (800, 360), 2)'''
     #Actualiza el contenido de la pantalla
     pygame.display.flip()
     
     #Dibuja los textos en la pantalla
-    muestra_texto(pantalla, Consolas, str(puntacion), RED, 40, 700, 50)
     
 pygame.quit()
