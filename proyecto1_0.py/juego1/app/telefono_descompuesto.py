@@ -43,3 +43,6 @@ while ejecutando:
     #Dibuja los textos en la pantalla
     
 pygame.quit()
+
+import pygame, sys
+

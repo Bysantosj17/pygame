@@ -19,6 +19,14 @@ Consolas = pygame.font.match_font('consolas')
 arial = pygame.font.match_font('arial')
 times = pygame.font.match_font('times')
 
+#Sonidos
+pygame.mixer.init()
+disparo_s_1 = pygame.mixer.Sound('./sistema_sonido_random/sonidos/disparo_1.mp3')
+explocion_s_1 = pygame.mixer.Sound('./sistema_sonido_random/sonidos/explocion_1.mp3')
+ambiente = pygame.mixer.Sound('./sistema_sonido_random/sonidos/ambiente_1.mp3')
+
+ambiente.play()
+
 def muestra_texto(pantalla, fuente, texto, color, dimesiones, posx, posy):
     tipo_letra = pygame.font.Font(fuente, dimesiones)
     superficie = tipo_letra.render(texto, True, color)
@@ -96,7 +104,7 @@ class Jugador(pygame.sprite.Sprite):
     def disparo(self):
         bala = Disparos(self.rect.centerx, self.rect.top - 10)
         balas.add(bala)
-        
+        disparo_s_1.play()
     '''def disparo2(self):
         bala = Disparos(self.rect.centerx + 20, self.rect.top)
         balas.add(bala)'''
@@ -340,12 +348,15 @@ while ejecutando:
     
     if colision_disparos_1:
         puntacion += 5
+        explocion_s_1.play()
         
     if colision_disparos_2:
         puntacion += 10
+        explocion_s_1.play()
         
     if colision_disparos_3:
         puntacion += 20
+        explocion_s_1.play()
         
     if not Enemigos_1 and not Enemigos_2 and not Enemigos_3:
         for x in range(random.randrange(5) + 2):
