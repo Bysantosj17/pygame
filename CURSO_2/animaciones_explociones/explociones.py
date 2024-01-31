@@ -3,10 +3,12 @@ import random
 import os
 
 carpeta_juego = os.path.dirname(__file__)
-carpeta_imagenes = os.path.join(carpeta_juego, "img")
 carpeta_sonido = os.path.join(carpeta_juego, "sonidos")
-carpeta_imagentes_enemigos =  os.path.join(carpeta_imagenes, "enemigos")
-carpeta_imagentes_jugador =  os.path.join(carpeta_imagenes, "jugador")
+
+carpeta_img = os.path.join(carpeta_juego, "img")
+carpeta_img_enemigos =  os.path.join(carpeta_img, "enemigos")
+carpeta_img_jugador =  os.path.join(carpeta_img, "jugador")
+carpeta_img_explo = os.path.join(carpeta_img, "explociones")
 
 #print(carpeta_imagentes_enemigos)
 
@@ -30,6 +32,12 @@ BLUE  = (  0,  0,255)
 Consolas = pygame.font.match_font('consolas')
 arial = pygame.font.match_font('arial')
 times = pygame.font.match_font('times')
+
+#Animacion de explocion
+animacion_explocion1 = {'t1' : [], 't2' : [], 't3' : [], 't3' : [] }
+
+for x in range(24):
+    archivo_explociones = f'explo_01_{x:04d}.png'
 
 def muestra_texto(pantalla, fuente, texto, color, dimesiones, posx, posy):
     tipo_letra = pygame.font.Font(fuente, dimesiones)
@@ -124,7 +132,7 @@ class Enemigos1(pygame.sprite.Sprite):
         #Heredamos el init de la clase Sprite de Pygame
         super().__init__()
         #Rectangulo (jugador)
-        self.image = pygame.image.load(os.path.join(carpeta_imagentes_enemigos,"img2.png")).convert()
+        self.image = pygame.image.load(os.path.join(carpeta_img_enemigos,"img2.png")).convert()
         self.image.set_colorkey(BLACK)
         #Obtiene el rectangulo (sprite)
         self.rect = self.image.get_rect()
