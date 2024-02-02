@@ -10,7 +10,7 @@ carpeta_img_enemigos =  os.path.join(carpeta_img, "enemigos")
 carpeta_img_jugador =  os.path.join(carpeta_img, "jugador")
 carpeta_img_explo = os.path.join(carpeta_img, "explociones")
 
-#print(carpeta_imagentes_enemigos)
+print(carpeta_img_explo)
 
 
 
@@ -34,10 +34,19 @@ arial = pygame.font.match_font('arial')
 times = pygame.font.match_font('times')
 
 #Animacion de explocion
-animacion_explocion1 = {'t1' : [], 't2' : [], 't3' : [], 't3' : [] }
+animacion_explocion1 = {'t1' : [], 't2' : [], 't3' : [], 't4' : [] }
 
 for x in range(24):
-    archivo_explociones = f'explo_01_{x:04d}.png'
+    archivo_explociones = f'expl_01_00{x:02d}.png'
+    imagenes = pygame.image.load(os.path.join(carpeta_img_explo, archivo_explociones))
+    imagenes_t1 = pygame.transform.scale(imagenes, (32,32))
+    animacion_explocion1["t1"].append(imagenes_t1)
+    imagenes_t2 = pygame.transform.scale(imagenes, (64,64))
+    animacion_explocion1["t2"].append(imagenes_t2)
+    imagenes_t3 = pygame.transform.scale(imagenes, (128,128))
+    animacion_explocion1["t3"].append(imagenes_t3)
+    imagenes_t4 = pygame.transform.scale(imagenes, (256,256))
+    animacion_explocion1["t4"].append(imagenes_t4)
 
 def muestra_texto(pantalla, fuente, texto, color, dimesiones, posx, posy):
     tipo_letra = pygame.font.Font(fuente, dimesiones)
@@ -279,6 +288,30 @@ class Disparos(pygame.sprite.Sprite):
             #Ancho
             self.velocidad_y = random.randrange(1, 10)
 '''
+
+class Explociones(pygame.sprite.Sprite):
+    def __init__(self, centro, dimensiones):
+        pygame.sprite.Sprite.__init__(self)
+        self.dimensiones =  dimensiones
+        self.image =  animacion_explocion1[self.dimensiones][0]
+        self.rect = self.image.get_rect()
+        self.rect.center = centro
+        self.fotograma = 0
+        self.frecuencia_fotograma = 35
+        self.actualizacion = pygame.time.get_ticks()
+        
+    def update(self):
+        ahora = pygame.time.get_ticks()
+        if ahora - self.actualizacion > self.frecuencia_fotograma:
+            self.fotograma +=1
+            if self.fotograma == len(animacion_explocion1[self.dimensiones]):
+                self.kill()
+            else:
+                centro = self.rect.center
+                self.image = animacion_explocion1[self.dimensiones][self.fotograma]
+                self.rect = self.image.get_rect()
+                self.rect.center = centro 
+    
 #Inicializacion de Pygame, creacion de la ventana, tituloy control de reloj
 pygame.init()
 pantalla = pygame.display.set_mode((ANCHO, ALTO))
@@ -291,8 +324,6 @@ clock = pygame.time.Clock()
 #Sistema de puntacion
 puntacion = 0
 
-
-
 #Grupo de sprites, instancias del objeto jugador
 Enemigos_list = pygame.sprite.Group()
 balas = pygame.sprite.Group()
@@ -301,6 +332,9 @@ sprites = pygame.sprite.Group()
 Enemigos_1 = pygame.sprite.Group()
 Enemigos_2 = pygame.sprite.Group()
 Enemigos_3 = pygame.sprite.Group()
+
+Explociones_1 = pygame.sprite.Group()
+
 
 '''MasEnemigos =  pygame.sprite.Group()'''
 
@@ -348,6 +382,8 @@ while ejecutando:
     Enemigos_1.update()
     Enemigos_2.update()
     Enemigos_3.update()
+    #Explociones
+    Explociones_1.update()
     
     
     colision_disparos_1 = pygame.sprite.groupcollide(Enemigos_1, balas, True, True, pygame.sprite.collide_circle)
@@ -360,12 +396,18 @@ while ejecutando:
     
     if colision_disparos_1:
         puntacion += 5
+        explociones =  Explociones(enemigos1.rect.center, 't1')
+        Explociones_1.add(explociones)
         
     if colision_disparos_2:
         puntacion += 10
+        explociones =  Explociones(enemigos2.rect.center, 't3')
+        Explociones_1.add(explociones)
         
     if colision_disparos_3:
         puntacion += 20
+        explociones =  Explociones(enemigos3.rect.center, 't4')
+        Explociones_1.add(explociones)
         
     if not Enemigos_1 and not Enemigos_2 and not Enemigos_3:
         for x in range(random.randrange(5) + 2):
@@ -399,6 +441,7 @@ while ejecutando:
     Enemigos_1.draw(pantalla)
     Enemigos_2.draw(pantalla)
     Enemigos_3.draw(pantalla)
+    Explociones_1.draw(pantalla)
     
     muestra_texto(pantalla, Consolas, str(puntacion).zfill(8), RED, 40, 850, 30)
     '''    pygame.draw.line(pantalla, RED, (400,0), (400, 800), 2 )
