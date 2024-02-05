@@ -1,8 +1,8 @@
 import pygame, sys
 
 #Tamaño de la pantalla
-ANCHO = 1000
-ALTO = 800
+ANCHO = 700
+ALTO = 500
 
 #FPS
 FPS = 30
@@ -19,10 +19,10 @@ Consolas = pygame.font.match_font('consolas')
 arial = pygame.font.match_font('arial')
 times = pygame.font.match_font('times')
 
-class Telefono_descompuesto:
+class Telefono_sin_num:
     def __init__(self):
         self.screen = pygame.display.set_mode((ANCHO, ALTO))
-        pygame.display.set_caption("telefono Descompuesto")
+        pygame.display.set_caption("telefono sin numeros")
         
     def corre_juego1(self):
         while True:

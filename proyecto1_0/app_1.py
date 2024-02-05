@@ -1,9 +1,12 @@
 import pygame, sys
 
-sys.path.append("juego1")
+#Menu
+from menu.menu import *
 
-from juego1.app_juego1.telefono_descompuesto import *
+#Juego_1
+from juego1.app_juego1.telefono_sin_num import *
+
 
 if __name__ == "__main__":
-    a = Telefono_descompuesto()
-    a.corre_juego1()
+    b = menu_game()
+    b.corre_menu()
