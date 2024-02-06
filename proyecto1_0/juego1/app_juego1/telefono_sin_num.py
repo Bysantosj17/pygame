@@ -21,7 +21,7 @@ times = pygame.font.match_font('times')
 
 class Telefono_sin_num:
     def __init__(self):
-        self.screen = pygame.display.set_mode((ANCHO, ALTO))
+        self.pantalla_juego1 = pygame.display.set_mode((ANCHO, ALTO))
         pygame.display.set_caption("telefono sin numeros")
         
     def corre_juego1(self):
