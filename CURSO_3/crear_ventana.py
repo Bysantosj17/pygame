@@ -6,8 +6,8 @@ from alien import *
 class GalagaPirata:
     def __init__(self):
         pygame.init()
-        self.ancho = 800
-        self.alto = 500
+        self.ancho = 1000
+        self.alto = 900
         self.screen = pygame.display.set_mode((self.ancho, self.alto))
         self.screen_width = self.screen.get_rect().width
         self.screen_height = self.screen.get_rect().height
@@ -67,18 +67,25 @@ class GalagaPirata:
             
     def _create_fleet(self):
         alien = Alien(self)
-        alien_width = alien.rect.width
-        availableSpace = self.ancho - (2 * alien_width)
-        numerodeAlien = availableSpace // ( 1 * alien_width)
+        alien_width, alien_height = alien.rect.size
+        availableSpace = self.ancho - (1 * alien_width)
+        numerodeAliens = availableSpace // ( 2 * alien_width)
+        nave_height = self.nave.rect.height
+        availableSpacey = self.alto - (3 * alien_height) - nave_height
+        numerodeFilas = availableSpacey // (2 * alien_height)
         
-        for numeroAlien in range(numerodeAlien):
-            alien =  Alien(self)
-            alien.x = alien_width + 2* alien_width * numeroAlien
-            alien.rect.x =  alien.x
-            self.aliens.add(alien)
-        
-        #self.aliens.add(alien)
-        
+        for fila in range(numerodeFilas):
+            for numeroAlien in range(numerodeAliens):
+                self._create_alien(numeroAlien, fila)
+                
+    def _create_alien(self, numeroAlien, fila):
+        alien = Alien(self)
+        alien_width, alien_height = alien.rect.size
+        alien.x = alien_width + 2 * alien_width * numeroAlien
+        alien.rect.x =  alien.x
+        alien.rect.y = alien.rect.height + 2 * alien.rect.height * fila
+        self.aliens.add(alien)
+
             
 if __name__ == "__main__":
     a = GalagaPirata()
