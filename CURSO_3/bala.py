@@ -10,10 +10,17 @@ class Bullet(Sprite):
         self.rect.midtop = a_game.nave.rect.midtop
         self.juego =  a_game
         self.y = float(self.rect.y)
+        self.bullets_allowed = 3
+        self.sonido = pygame.mixer.Sound("./sonido/disparo_1.wav")
+        self.sonido.play()
+        
         
     def update(self):
         self.y -= self.juego.velocidad
         self.rect.y = self.y
+        self.bullets = self.juego.bullets
+        self.aliens =  self.juego.aliens
+        choques = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
         
     def draw_bullet(self):
         pygame.draw.rect(self.screen, self.color, self.rect)

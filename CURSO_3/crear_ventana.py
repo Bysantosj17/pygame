@@ -6,8 +6,8 @@ from alien import *
 class GalagaPirata:
     def __init__(self):
         pygame.init()
-        self.ancho = 1000
-        self.alto = 900
+        self.ancho = 700
+        self.alto = 700
         self.screen = pygame.display.set_mode((self.ancho, self.alto))
         self.screen_width = self.screen.get_rect().width
         self.screen_height = self.screen.get_rect().height
@@ -19,8 +19,14 @@ class GalagaPirata:
         self.colorbala = (255, 0, 0) 
         self.nave = Nave(self)
         self.bullets =  pygame.sprite.Group()
-        self.balas_totales = 3
+        self.balas_totales =100
         self.aliens =  pygame.sprite.Group()
+        self.velocidad_Alien = 1.0
+        self.flota_veocidad = 7
+        self.flota_dire = .5
+        pygame.mixer.music.load("./musica/ambiente_1.wav")
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.1)
         self._create_fleet()
         
     def corre_juego(self):
@@ -48,6 +54,7 @@ class GalagaPirata:
             self.screen.fill(self.color)
             self.nave.corre()
             self.bullets.update()
+            self.update_alien()
             
             for bullet in self.bullets.copy():
                 if bullet.rect.bottom <= 0:
@@ -85,6 +92,24 @@ class GalagaPirata:
         alien.rect.x =  alien.x
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * fila
         self.aliens.add(alien)
+        
+    def update_alien(self):
+        self.checa_bordesFlota()
+        self.aliens.update()
+        if not self.aliens:
+            self.bullets.empty()
+            self._create_fleet()
+        
+    def checa_bordesFlota(self):
+        for alien in self.aliens.sprites():
+            if alien.checa_bordes():
+                self.cambia_dire()
+                break
+            
+    def cambia_dire(self):
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.flota_veocidad
+        self.flota_dire *= -1
 
             
 if __name__ == "__main__":
