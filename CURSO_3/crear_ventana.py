@@ -4,6 +4,7 @@ from bala import *
 from alien import *
 from estadisticas import *
 from time import sleep
+from botones import Boton
 
 class GalagaPirata:
     def __init__(self):
@@ -19,18 +20,24 @@ class GalagaPirata:
         self.anchobala = 3
         self.altobala = 15
         self.colorbala = (255, 0, 0)
-        self.naves_restantes= 3
-        self.estadisticas = Estadisticas(self) 
+        self.naves_restantes = 1
         self.nave = Nave(self)
         self.bullets =  pygame.sprite.Group()
         self.balas_totales =100
         self.aliens =  pygame.sprite.Group()
         self.velocidad_Alien = 0.5
-        self.flota_veocidad = 7
+        self.flota_veocidad = 150
         self.flota_dire = .5
+        self.juego_activado = True
+        self.estadisticas = Estadisticas(self)
+        self.play_boton = Boton(self, "Play")
+        
+        #Musica
         pygame.mixer.music.load("./musica/ambiente_1.wav")
+        #play Musica
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.1)
+        #Sonido de la musica
+        pygame.mixer.music.set_volume(0.0)
         self._create_fleet()
         
     def corre_juego(self):
@@ -52,21 +59,30 @@ class GalagaPirata:
                         self.nave.mover_derecha = False
                     if event.key == pygame.K_LEFT:
                         self.nave.mover_izquierda = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    mousePos = pygame.mouse.get_pos()
+                    self.checaBoton(mousePos)
                         
-                        
-            self.nave.mover()
-            self.screen.fill(self.color)
-            self.nave.corre()
-            self.bullets.update()
-            self.update_alien()
+            if self.juego_activado:    
+                self.nave.mover()
+                self.screen.fill(self.color)
+                self.nave.corre()
+                self.bullets.update()
+                self.update_alien()
             
-            for bullet in self.bullets.copy():
-                if bullet.rect.bottom <= 0:
-                    self.bullets.remove(bullet)
+                for bullet in self.bullets.copy():
+                    if bullet.rect.bottom <= 0:
+                        self.bullets.remove(bullet)
+                
+                for bullet in self.bullets.sprites():
+                    bullet.draw_bullet()
+                self.aliens.draw(self.screen)  
+                
+                
+                
             
-            for bullet in self.bullets.sprites():
-                bullet.draw_bullet()
-            self.aliens.draw(self.screen)
+            if not self.juego_activado:
+                self.play_boton.Dibuja_boton()
                 
             pygame.display.flip()
             
@@ -116,19 +132,26 @@ class GalagaPirata:
             self.bullets.empty()
             self._create_fleet()
         if pygame.sprite.spritecollideany(self.nave, self.aliens):
-            print("fin")
-            
+            self.nave_colisionada()
             
     def nave_colisionada(self):
-        self.naves_restantes -= 1
-        
-        self.aliens.empty()
-        self.bullets.empty()
-        
-        self._create_fleet()
-        self.nave.centrar_nave()
-        
-        sleep(0.5)
+        if self.naves_restantes > 1:
+            self.naves_restantes -= 1
+            
+            self.aliens.empty()
+            self.bullets.empty()
+            
+            self._create_fleet()
+            self.nave.centrar_nave()
+            
+            sleep(0.5) 
+            
+        else: 
+            self.juego_activado = False
+            
+    def checaBoton(self, mousePos):
+        if self.play_boton.rect.collidepoint(mousePos):
+            self.juego_activado = True
 
             
 if __name__ == "__main__":
