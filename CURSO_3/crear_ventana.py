@@ -2,6 +2,8 @@ import pygame, sys
 from cargar_img import *
 from bala import *
 from alien import *
+from estadisticas import *
+from time import sleep
 
 class GalagaPirata:
     def __init__(self):
@@ -16,12 +18,14 @@ class GalagaPirata:
         self.velocidad = 1
         self.anchobala = 3
         self.altobala = 15
-        self.colorbala = (255, 0, 0) 
+        self.colorbala = (255, 0, 0)
+        self.naves_restantes= 3
+        self.estadisticas = Estadisticas(self) 
         self.nave = Nave(self)
         self.bullets =  pygame.sprite.Group()
         self.balas_totales =100
         self.aliens =  pygame.sprite.Group()
-        self.velocidad_Alien = 1.0
+        self.velocidad_Alien = 0.5
         self.flota_veocidad = 7
         self.flota_dire = .5
         pygame.mixer.music.load("./musica/ambiente_1.wav")
@@ -93,13 +97,6 @@ class GalagaPirata:
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * fila
         self.aliens.add(alien)
         
-    def update_alien(self):
-        self.checa_bordesFlota()
-        self.aliens.update()
-        if not self.aliens:
-            self.bullets.empty()
-            self._create_fleet()
-        
     def checa_bordesFlota(self):
         for alien in self.aliens.sprites():
             if alien.checa_bordes():
@@ -110,6 +107,28 @@ class GalagaPirata:
         for alien in self.aliens.sprites():
             alien.rect.y += self.flota_veocidad
         self.flota_dire *= -1
+        
+            
+    def update_alien(self):
+        self.checa_bordesFlota()
+        self.aliens.update()
+        if not self.aliens:
+            self.bullets.empty()
+            self._create_fleet()
+        if pygame.sprite.spritecollideany(self.nave, self.aliens):
+            print("fin")
+            
+            
+    def nave_colisionada(self):
+        self.naves_restantes -= 1
+        
+        self.aliens.empty()
+        self.bullets.empty()
+        
+        self._create_fleet()
+        self.nave.centrar_nave()
+        
+        sleep(0.5)
 
             
 if __name__ == "__main__":
