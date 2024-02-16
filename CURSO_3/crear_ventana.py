@@ -4,11 +4,13 @@ from bala import *
 from alien import *
 from estadisticas import *
 from time import sleep
-from botones import Boton
+from botones import *
+from puntajes import *
 
 class GalagaPirata:
     def __init__(self):
         pygame.init()
+        self.score = 0
         self.ancho = 700
         self.alto = 700
         self.screen = pygame.display.set_mode((self.ancho, self.alto))
@@ -28,8 +30,9 @@ class GalagaPirata:
         self.velocidad_Alien = 0.5
         self.flota_veocidad = 150
         self.flota_dire = .5
-        self.juego_activado = True
+        self.juego_activado = False
         self.estadisticas = Estadisticas(self)
+        self.tablaP = Puntaje(self)
         self.play_boton = Boton(self, "Play")
         
         #Musica
@@ -150,10 +153,17 @@ class GalagaPirata:
             self.juego_activado = False
             
     def checaBoton(self, mousePos):
-        if self.play_boton.rect.collidepoint(mousePos):
+        self.boton_inicio = self.play_boton.rect.collidepoint(mousePos)
+        if self.boton_inicio and not self.juego_activado:
+            self.estadisticas.reini()
             self.juego_activado = True
-
             
+            self.aliens.empty()
+            self.bullets.empty()
+            
+            self._create_fleet()
+            self.nave.centrar_nave()
+                
 if __name__ == "__main__":
     a = GalagaPirata()
     a.corre_juego()

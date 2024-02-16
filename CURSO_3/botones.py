@@ -8,7 +8,7 @@ class Boton:
         self.color = (255, 0, 0)
         self.textoColor = (255, 255, 255)
         
-        self.font = pygame.font.SysFont(None, 48, bold=False, italic=False)
+        self.font = pygame.font.SysFont("RED", 48, bold=False, italic=True)
         
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         self.rect.center = self.screen_rect.center
