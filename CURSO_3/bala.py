@@ -11,6 +11,7 @@ class Bullet(Sprite):
         self.juego =  a_game
         self.y = float(self.rect.y)
         self.bullets_allowed = 3
+        self.aliensPuntaje = 50
         self.sonido = pygame.mixer.Sound("./sonido/disparo_1.wav")
         self.sonido.play()
         
@@ -20,7 +21,14 @@ class Bullet(Sprite):
         self.rect.y = self.y
         self.bullets = self.juego.bullets
         self.aliens =  self.juego.aliens
-        choques = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        
+        self.choques = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        
+        if self.choques:
+            for aliens in self.choques.values():
+                self.juego.score += self.aliensPuntaje * len(aliens)
+                self.juego.tablaP.prep_score()
+                self.juego.tablaP.checa_highScore()
         
     def draw_bullet(self):
         pygame.draw.rect(self.screen, self.color, self.rect)

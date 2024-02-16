@@ -9,12 +9,13 @@ class Nave:
         self.rect.midbottom = self.screen_rect.midbottom
         self.mover_derecha = False
         self.mover_izquierda =  False
+        self.velocidad = a_game.velocidad_nave
     
     def mover(self):
         if self.mover_derecha and self.rect.right < self.screen_rect.right:
-            self.rect.x += 0.7
+            self.rect.x += self.velocidad
         if self.mover_izquierda and self.rect.left > 0:
-            self.rect.x -= 0.7
+            self.rect.x -= self.velocidad
         
         
     def corre(self):

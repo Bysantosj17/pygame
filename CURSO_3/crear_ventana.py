@@ -11,6 +11,7 @@ class GalagaPirata:
     def __init__(self):
         pygame.init()
         self.score = 0
+        self.HighScore = 0
         self.ancho = 700
         self.alto = 700
         self.screen = pygame.display.set_mode((self.ancho, self.alto))
@@ -22,18 +23,21 @@ class GalagaPirata:
         self.anchobala = 3
         self.altobala = 15
         self.colorbala = (255, 0, 0)
-        self.naves_restantes = 1
+        self.naves_restantes = 3
+        self.velocidad_nave = 1
         self.nave = Nave(self)
         self.bullets =  pygame.sprite.Group()
         self.balas_totales =100
         self.aliens =  pygame.sprite.Group()
         self.velocidad_Alien = 0.5
-        self.flota_veocidad = 150
+        self.flota_veocidad = 10
         self.flota_dire = .5
         self.juego_activado = False
         self.estadisticas = Estadisticas(self)
         self.tablaP = Puntaje(self)
         self.play_boton = Boton(self, "Play")
+        self.velocidad_aumentada = 1.1
+        self.valoresDefault()
         
         #Musica
         pygame.mixer.music.load("./musica/ambiente_1.wav")
@@ -48,6 +52,7 @@ class GalagaPirata:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
+                    
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
                         self.nave.mover_derecha = True
@@ -79,9 +84,8 @@ class GalagaPirata:
                 
                 for bullet in self.bullets.sprites():
                     bullet.draw_bullet()
-                self.aliens.draw(self.screen)  
-                
-                
+                self.aliens.draw(self.screen)
+                self.tablaP.muestraScore()
                 
             
             if not self.juego_activado:
@@ -133,13 +137,16 @@ class GalagaPirata:
         self.aliens.update()
         if not self.aliens:
             self.bullets.empty()
+            self.aumentaVelocidad()
             self._create_fleet()
+            
         if pygame.sprite.spritecollideany(self.nave, self.aliens):
             self.nave_colisionada()
             
     def nave_colisionada(self):
         if self.naves_restantes > 1:
             self.naves_restantes -= 1
+            self.tablaP.prep_corazones()
             
             self.aliens.empty()
             self.bullets.empty()
@@ -155,14 +162,32 @@ class GalagaPirata:
     def checaBoton(self, mousePos):
         self.boton_inicio = self.play_boton.rect.collidepoint(mousePos)
         if self.boton_inicio and not self.juego_activado:
+            self.valoresDefault()
             self.estadisticas.reini()
             self.juego_activado = True
+            self.score = 0
+            self.tablaP.prep_score()
+            self.naves_restantes = 3
+            self.tablaP.prep_corazones()
             
             self.aliens.empty()
             self.bullets.empty()
             
             self._create_fleet()
             self.nave.centrar_nave()
+            
+    def valoresDefault(self):
+        self.velocidad_nave = 1
+        self.velocidad = 1
+        self.velocidad_Alien = 0.5
+        
+        self.flota_dire = .5
+        
+    def aumentaVelocidad(self):
+        self.velocidad_nave *= self.velocidad_aumentada
+        self.velocidad *= self.velocidad_aumentada
+        self.velocidad_Alien *= self.velocidad_aumentada
+        
                 
 if __name__ == "__main__":
     a = GalagaPirata()
