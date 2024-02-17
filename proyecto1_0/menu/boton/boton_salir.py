@@ -1,25 +1,18 @@
 import pygame.font
 
-class Boton:
-    def __init__(self, a_game, texto):
-        self.screen =  a_game.screen
-        self.screen_rect = self.screen.get_rect()
-        self.width, self.height = 200, 50
-        self.color = (255, 0, 0)
-        self.textoColor = (255, 255, 255)
-        
-        self.font = pygame.font.SysFont(None, 48)
-        
-        self.rect = pygame.Rect(100, 100, self.width, self.height)
-        self.rect.center = self.screen_rect.center
-        
-        self.prepara_texto(texto)
-        
-    def prepara_texto(self, texto):
-        self.texto_image = self.font.render(texto, True, self.textoColor, self.color)
-        self.texto_image_rect = self.texto_image.get_rect()
-        self.texto_image_rect.center = self.rect.center
-        
-    def Dibuja_boton(self):
-        self.screen.fill(self.color, self.rect)
-        self.screen.blit(self.texto_image, self.texto_image_rect)
+background_color = (255, 255, 255)
+button_color = (100, 100, 100)
+text_color = (255, 255, 255)
+class Button:
+    def __init__(self, text, position, width, height):
+        self.text = text
+        self.position = position
+        self.width = width
+        self.height = height
+
+    def draw(self, surface):
+        pygame.draw.rect(surface, button_color, (self.position[0], self.position[1], self.width, self.height))
+        font = pygame.font.SysFont(None, 36)
+        text = font.render(self.text, True, text_color)
+        text_rect = text.get_rect(center=(self.position[0] + self.width / 2, self.position[1] + self.height / 2))
+        surface.blit(text, text_rect)
