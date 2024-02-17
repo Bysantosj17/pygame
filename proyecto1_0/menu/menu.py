@@ -29,7 +29,7 @@ class menu_game:
         self.screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
         self.color_font = (AZUL_CIELO)
         self.juego1_activado = True
-        self.button = Button("Presionar", ((screen_width-300), (screen_height-1000)), 200, 50)
+        self.button = Button("Presionar", ((screen_width-300), (screen_height-700)), 200, 50)
 
     def corre_menu(self):
         while True:
